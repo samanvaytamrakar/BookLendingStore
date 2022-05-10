@@ -29,6 +29,7 @@ public class EmployeeServiceImple implements EmployeeService {
 	
 	/**
 	 * for adding the employee details
+	 * @throws BookLendException 
 	 */
 	@Override
 	public EmployeeDetails addEmployee(EmployeeModel emp) {

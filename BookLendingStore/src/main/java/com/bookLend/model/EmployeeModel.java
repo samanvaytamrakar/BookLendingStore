@@ -6,7 +6,7 @@ public class EmployeeModel {
 
 	private String name;
 		
-	private String Role;
+	private String role;
 		
 	private String mail;
 		
@@ -32,12 +32,18 @@ public class EmployeeModel {
 		this.name = name;
 	}
 
+	/**
+	 * @return the role
+	 */
 	public String getRole() {
-		return Role;
+		return role;
 	}
 
+	/**
+	 * @param role the role to set
+	 */
 	public void setRole(String role) {
-		Role = role;
+		this.role = role;
 	}
 
 	public String getMail() {
@@ -108,7 +114,7 @@ public class EmployeeModel {
 		EmployeeDetails emp = new EmployeeDetails();
 		emp.setName(name);
 		emp.setMail(mail);
-		emp.setRole(Role);
+		emp.setRole(role);
 		emp.setAddress1(address1);
 		emp.setAddress2(address2);
 		emp.setAddress3(address3);
@@ -116,5 +122,14 @@ public class EmployeeModel {
 		emp.setPincode(pincode);
 		return emp;
 	}
+
+	@Override
+	public String toString() {
+		return "EmployeeModel [name=" + name + ", Role=" + role + ", mail=" + mail + ", address1=" + address1
+				+ ", address2=" + address2 + ", address3=" + address3 + ", city=" + city + ", pincode=" + pincode
+				+ ", username=" + username + ", password=" + password + "]";
+	}
 		
+	
+	
 }

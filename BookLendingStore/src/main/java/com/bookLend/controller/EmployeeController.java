@@ -31,6 +31,7 @@ public class EmployeeController {
 	@PostMapping(value= "/saveEmployeeDetails" )
 	public BookLendResponse<EmployeeDetails> saveEmployee(@RequestBody EmployeeModel employee) throws BookLendException{
 		
+		System.out.println(employee.toString());
 		if(employee == null) {
 			System.out.println("detail not found");
 			return new BookLendResponse("Details are Null",bookStoreConstants.badRequest,HttpStatus.BAD_REQUEST);
