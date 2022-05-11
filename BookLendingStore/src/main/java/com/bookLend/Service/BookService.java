@@ -6,7 +6,6 @@ package com.bookLend.Service;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
 
 import com.bookLend.entity.BookDetails;
 import com.bookLend.entity.BookLendDetails;

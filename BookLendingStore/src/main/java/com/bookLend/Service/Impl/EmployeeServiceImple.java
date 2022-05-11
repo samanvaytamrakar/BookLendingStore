@@ -1,6 +1,6 @@
 package com.bookLend.Service.Impl;
 
-import java.sql.SQLException;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +62,7 @@ public class EmployeeServiceImple implements EmployeeService {
 		if(emp == null)
 			throw new BookLendException("Id is not present in database");
 		
-		String result = "";
+		
 		if(emp.getRole().equalsIgnoreCase("Admin") || emp.getRole().equalsIgnoreCase("User")) {
 			LoginDetails login = empDao.searchEmpInLoginTable(emp.getEmpId());
 			
