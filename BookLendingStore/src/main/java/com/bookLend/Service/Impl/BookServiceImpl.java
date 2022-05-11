@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bookLend.Service.BookService;
 import com.bookLend.dao.BookDao;
@@ -19,7 +20,10 @@ import com.bookLend.exception.BookLendException;
 import com.bookLend.model.BookLendModel;
 import com.bookLend.utility.DateUtility;
 
+
+
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class BookServiceImpl implements BookService {
 
 	@Autowired

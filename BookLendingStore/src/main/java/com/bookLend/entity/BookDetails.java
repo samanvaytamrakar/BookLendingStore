@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author saman
  *
@@ -57,6 +59,7 @@ public class BookDetails {
 		this.lendingCost = lendingCost;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "bookDetails", fetch = FetchType.LAZY)
 	private List<BookLendDetails> bookLend;
 

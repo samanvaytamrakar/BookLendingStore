@@ -37,8 +37,8 @@ public class BookLendDetails {
 	@Column(name = "status")
 	private boolean status;
 
-	@ManyToOne()
-			//fetch = FetchType.EAGER,cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+	@ManyToOne(
+			fetch = FetchType.EAGER,cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	@JoinColumn(name ="userId")
 	private CustomerDetails customerDetails;
 	

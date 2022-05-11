@@ -16,4 +16,6 @@ public interface CustomerDao {
 	
 	public List<CustomerDetails> getAllCustomer();
 
+	List<CustomerDetails> addListOfCustomer(List<CustomerDetails> userdetail);
+
 }

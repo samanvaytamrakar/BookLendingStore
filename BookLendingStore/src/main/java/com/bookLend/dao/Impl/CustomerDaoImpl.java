@@ -20,6 +20,13 @@ public class CustomerDaoImpl implements CustomerDao {
 		return custRepo.save(userdetail);
 		
 	}
+	
+	
+	@Override
+	public List<CustomerDetails> addListOfCustomer(List<CustomerDetails> userdetail) {
+		return (List<CustomerDetails>) custRepo.saveAll(userdetail);
+		
+	}
 
 	@Override
 	public String deleteCustomer(int id) {

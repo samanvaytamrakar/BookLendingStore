@@ -17,13 +17,13 @@ public interface BookLendDetailsRepo extends CrudRepository<BookLendDetails, Int
 	@Query(value = "select * from Book_Lend_Details where Book_Id = :Book_Id", nativeQuery = true)
 	public List<BookLendDetails> getIssuedBookByBookId(@Param("Book_Id")int Book_Id);
 	
-	@Query(value = "select * from Book_Lend_Details where Issue_Date = :Issue_Date", nativeQuery = true)
+	@Query(value = "select * from Book_Lend_Details where lend_date = :Issue_Date", nativeQuery = true)
 	public List<BookLendDetails> getIssuedBookByDate(@Param("Issue_Date")Date Issue_Date);
 	
 	@Query(value = "select * from Book_Lend_Details where Customer_Id = :Customer_Id", nativeQuery = true)
 	public List<BookLendDetails> getIssuedBookByCustomeId(@Param("Customer_Id")int Customer_Id);
 	
-	@Query(value = "select * from Book_Lend_Details where Issue_Date = :startDate AND Issue_Date = :endDate", nativeQuery = true)
+	@Query(value = "select * from Book_Lend_Details where lend_date = :startDate AND lend_date = :endDate", nativeQuery = true)
 	public List<BookLendDetails> getIssuedBooksByDates(@Param("startDate")Date startDate, @Param("endDate")Date endDate);
 	
 	@Query(value = "select * from Book_Lend_Details where Return_Date = :Return_Date", nativeQuery = true)

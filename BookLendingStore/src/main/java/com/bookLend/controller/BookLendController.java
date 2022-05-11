@@ -1,6 +1,7 @@
 package com.bookLend.controller;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,53 +33,73 @@ public class BookLendController {
 	
 	
 	@PostMapping(value= "/issueBook" )
-	public BookLendResponse<BookLendDetails> issueBook(@RequestBody BookLendModel bookModel) throws BookLendException{
+	public BookLendResponse<List<BookLendDetails>> issueBook(@RequestBody List<BookLendModel> bookModels) throws BookLendException{
 		
-		if(bookModel== null) {
+		if(bookModels== null || bookModels.size() == 0) {
 			System.out.println("detail not found");
 			return new BookLendResponse("Book details are null",bookStoreConstants.badRequest,HttpStatus.BAD_REQUEST);		
 		}
 		
+		List<BookLendDetails> details = new ArrayList<BookLendDetails>();
 		
-		BookLendDetails lendDetail = bookService.issueBook(bookModel);
+		for(BookLendModel bookModel : bookModels ) {
+			BookLendDetails lendDetail = bookService.issueBook(bookModel);
 		
-		if(lendDetail  == null) {
-			throw new BookLendException(bookStoreConstants.PROCESSFAILD);
+			if(lendDetail  == null) {
+				throw new BookLendException(bookStoreConstants.PROCESSFAILD);
+			}
+			
+			details.add(lendDetail);
 		}
 		
-		BookLendResponse response = new BookLendResponse("Book Issued","200",HttpStatus.OK,lendDetail);
+		BookLendResponse response = new BookLendResponse("Book Issued","200",HttpStatus.OK,details);
 		
 		return response;
 	}
 	
 
 	@PostMapping(value= "/returnBook" )
-	public BookLendResponse<BookLendDetails> returnBook(@RequestParam("issueId") String issueId) throws BookLendException{
+	public BookLendResponse<List<BookLendDetails>> returnBook(@RequestParam("issueId") String issueId) throws BookLendException{
 
 		if(issueId == null) {
 			System.out.println("Id is null");
-			return new BookLendResponse("Id is null",bookStoreConstants.badRequest,HttpStatus.BAD_REQUEST);		
+			throw new BookLendException("Id is null");		
 		}
 		
-		try {
-			int Id = Integer.parseInt(issueId.trim());
+		String[] ids = issueId.split(",");
+		List<Integer> issued = new ArrayList<>();
 		
-			BookLendDetails returnDetail = bookService.returnBook(Id);
-			
-			if(returnDetail  == null) {
-				System.out.println("not returned");
-				return new BookLendResponse("unable to return book",bookStoreConstants.badRequest,HttpStatus.BAD_REQUEST);	
-			}
-			
-			BookLendResponse response = new BookLendResponse("Book returned","200",HttpStatus.OK,returnDetail);
-			
-			return response;
-			
+		//validating and converting id into integer
+		for(String str : ids) {
+		int id = 0;
+		try {
+			id = Integer.parseInt(str.trim());
+			issued.add(id);
 		}
 		catch(NumberFormatException nex) {
-			return new BookLendResponse("Id is not valid","400",HttpStatus.BAD_REQUEST,"Id must be numaric");
+			throw new BookLendException("Id must be numaric", nex);
 		}
-	
+		}
+		
+		List<BookLendDetails> returnDetails = new ArrayList<BookLendDetails>();
+		
+		//returnuing book
+		for(int ID : issued) {
+			if(ID != 0) {
+				BookLendDetails returnDetail = bookService.returnBook(ID);
+			
+				if(returnDetail  == null) {
+					System.out.println("not returned");
+					return new BookLendResponse("unable to return book",bookStoreConstants.badRequest,HttpStatus.BAD_REQUEST);	
+				}
+		
+				returnDetails.add(returnDetail);
+		}
+		}
+		BookLendResponse response = new BookLendResponse("Book returned","200",HttpStatus.OK,returnDetails);
+			
+		return response;
+			
 		
 	}
 	
@@ -145,7 +166,7 @@ public class BookLendController {
 		
 		Date date = null;
 		try {
-			date = DateUtility.formattedDate(issueDate, "MM/dd/yyyy");
+			date = DateUtility.formattedDate(issueDate, "yyyy-MM-dd");
 		
 		} catch (ParseException e) {
 			System.out.println("Date is not valid");
